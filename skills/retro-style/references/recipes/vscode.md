@@ -1,7 +1,7 @@
 # VS Code
 
-Status: **mapping only, not applied yet.** Once it's applied, update this file
-with whatever had to change.
+Status: **applied** on the desktop (2026-10-20, snes dark). The full set of
+keys written is in the settings.json there; the table below is the core.
 
 ## Where
 
@@ -43,6 +43,17 @@ with whatever had to change.
 | `terminal.background` / `terminal.foreground` / `terminal.ansi*` | from `palette.py --format ansi` |
 | `editorCursor.foreground` | `accent` |
 
+Also set, beyond the table: menus (`menu.*`: `panel`, selection `accent`),
+suggest/hover/quick-input widgets (`panel`, border `key2`, selected `lav`),
+`sideBarSectionHeader.*` (`key`/`keyink`), status bar items for error/warning
+(`red`/`yellow`, yellow with `key2` text), `statusBar.debuggingBackground`
+`yellow`, scrollbar sliders (`key` → `dim` → `accent`), gutter diff colors
+(green/yellow/red).
+
+Find matches: no alpha (motifs rule 1), so `editor.findMatchBackground` is
+`lav` with a `yellow` border, other matches `panel2` with a `lav` border.
+A solid `yellow` fill would need `key2` text, which VS Code can't set.
+
 No soft shadows (motifs rule 1): set `widget.shadow` and `scrollbar.shadow`
 to `#00000000`.
 
@@ -63,5 +74,17 @@ to `#00000000`.
 
 - `editor.fontFamily`: `'Departure Mono', monospace`, `editor.fontSize`: 11
   or 22 (the font's grid). VS Code can't use the bitmap Terminus `.otb`.
+  The desktop (96 DPI, no scaling) uses 22: 11 is crisp but too small to
+  read. Same for `terminal.integrated.font*`.
+- `editor.cursorStyle: block` + `cursorBlinking: solid` (and the terminal's
+  cursor block) for the CYD feel.
+- Fonts installed while VS Code is open don't show up until a full restart
+  (Reload Window isn't enough).
+- Settings Sync check: no `sync.*enable*` keys in
+  `~/.config/Code/User/globalStorage/state.vscdb` means it's off.
+- Applying: a small Python script that loads settings.json, fills the
+  `[Default Dark Modern]` block from `palette.py --format json` and sets
+  `workbench.colorTheme`. Only works while settings.json is strict JSON (no
+  comments); check with `json.load` first.
 - `editor.fontLigatures`: false.
 - Leave the workbench UI font alone unless asked (see typography.md).
