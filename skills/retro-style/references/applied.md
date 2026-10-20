@@ -23,6 +23,17 @@ Newest first. One entry per app per machine.
 - **Notes:** what broke or surprised, if anything
 -->
 
+### 2026-10-20 · Claude Code status line · vinicius-antunes-laptop
+- **Look:** same as the desktop entry below (the desktop script copied over
+  with `scp`).
+- **Files:** `~/.claude/statusline-command.sh` (backup:
+  `statusline-command.sh.bak-retro-20261020`, the laptop's own pre-retro
+  version: same features, different code). `settings.json` already pointed
+  at the script.
+- **Undo:** copy the backup over the script.
+- **Notes:** test run over SSH only, not checked on screen. Rounded caps fall
+  back to `FiraCode Nerd Font` here.
+
 ### 2026-10-20 · Claude Code status line · vinicius-antunes-desktop
 - **Look:** snes dark, 24-bit ANSI: A B X Y dots, account and model as
   rounded chips, 5h/7d/context as 10-segment `▌` bars at 60/85 levels.
