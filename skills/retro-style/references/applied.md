@@ -31,6 +31,16 @@ Newest first. One entry per app per machine.
 - **Undo:** delete the folder, `fc-cache -f`.
 - **Notes:** the laptop needs the same folder before any app there uses them.
 
+### 2026-10-20 · Orca IDE · vinicius-antunes-desktop
+- **Look:** terminal theme `Traditional Japanese Fuji` (from the VS Code
+  theme), imported through the UI. The app UI and code editor can't be themed.
+- **Files:** `~/.config/orca-themes/traditional-japanese-fuji.yaml`. Orca
+  stores the import in its own settings DB. Previous terminal theme:
+  `Tokyo Night`.
+- **Undo:** Settings > Terminal > Dark Theme > `Tokyo Night`.
+- **Notes:** import pending on 2026-10-20 (the user does it in Settings).
+  See `recipes/orca.md`.
+
 ### 2026-10-20 · VS Code · vinicius-antunes-desktop
 - **Look:** Marketplace theme `Traditional Japanese Shrine`
   (extension `AdriaForcada.traditional-japanese-vscode-theme` v1.3.3), picked
