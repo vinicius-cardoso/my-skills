@@ -23,6 +23,16 @@ Newest first. One entry per app per machine.
 - **Notes:** what broke or surprised, if anything
 -->
 
+### 2026-10-20 · Claude Code status line · vinicius-antunes-desktop
+- **Look:** snes dark, 24-bit ANSI: A B X Y dots, account and model as
+  keycap chips, 5h/7d/context as 10-segment `▌` bars at 60/85 levels.
+  Font is the terminal's.
+- **Files:** `~/.claude/statusline-command.sh` (backup:
+  `statusline-command.sh.bak-retro-20261020`). `settings.json` untouched.
+- **Undo:** copy the backup over the script; it takes effect on the next update.
+- **Notes:** checked live in Orca's terminal. Usage thresholds went from
+  80/70 to 60/85. See `recipes/claude-code-statusline.md`.
+
 ### 2026-10-20 · fonts · vinicius-antunes-desktop
 - **Look:** Press Start 2P (google/fonts) and Departure Mono v1.500
   (rektdeckard/departure-mono release zip), installed per user.
