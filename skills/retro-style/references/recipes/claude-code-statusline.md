@@ -39,7 +39,7 @@ theme or mode, replace that table only.
 | element | look | roles |
 |---|---|---|
 | signature | `●●●●` | red, yellow, green, blue |
-| account | rounded chip, lowercase | WORK `blue`, PERSONAL `green`, unknown `purple`; text `keyink` |
+| account | rounded chip, lowercase | work `blue`, personal `green`, unknown `purple`; text `keyink` |
 | 5h / 7d / context | `5h ▌▌▌▌▌▌▌▌▌▌ 42% 1h20m` | label and reset `dim`; bar and % in the level color; empty segments `panel2` |
 | levels | 60/85 house rule | green < 60, yellow 60–84, red ≥ 85 |
 | directory | plain text | `cyan` = light-mode `lav` (#ABA7DE), the palette's ANSI cyan |
@@ -59,7 +59,7 @@ between segments on the device. 10 segments, rounded (42% → 4).
   user's choice for this app, overriding the UPPERCASE copy rule in
   `motifs.md`.
 - Keep `LC_NUMERIC=C` (pt_BR rejects `45.2` in `printf '%.0f'`), and
-  `LC_CTYPE=C.UTF-8` so the `$''` caps work under any caller locale.
+  `LC_CTYPE=C.UTF-8` so the `$'\uE0B6'` caps work under any caller locale.
 - Text on a yellow chip would need `key2`. No element uses one today.
 - The old thresholds were 80% (5h/7d) and 70% (context). They now follow the
   60/85 house rule.
