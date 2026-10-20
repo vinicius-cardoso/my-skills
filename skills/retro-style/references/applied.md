@@ -26,7 +26,8 @@ Newest first. One entry per app per machine.
 ### 2026-10-20 · Claude Code status line · vinicius-antunes-desktop
 - **Look:** snes dark, 24-bit ANSI: A B X Y dots, account and model as
   rounded chips, 5h/7d/context as 10-segment `▌` bars at 60/85 levels.
-  Font is the terminal's.
+  Font is the terminal's; all text lowercase (user's choice, not the
+  UPPERCASE copy rule).
 - **Files:** `~/.claude/statusline-command.sh` (backup:
   `statusline-command.sh.bak-retro-20261020`). `settings.json` untouched.
 - **Undo:** copy the backup over the script; it takes effect on the next update.

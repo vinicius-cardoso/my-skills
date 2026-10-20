@@ -39,12 +39,12 @@ theme or mode, replace that table only.
 | element | look | roles |
 |---|---|---|
 | signature | `●●●●` | red, yellow, green, blue |
-| account | rounded chip, UPPERCASE | WORK `blue`, PERSONAL `green`, unknown `purple`; text `keyink` |
-| 5h / 7d / context | `5H ▌▌▌▌▌▌▌▌▌▌ 42% 1H20M` | label and reset `dim`; bar and % in the level color; empty segments `panel2` |
+| account | rounded chip, lowercase | WORK `blue`, PERSONAL `green`, unknown `purple`; text `keyink` |
+| 5h / 7d / context | `5h ▌▌▌▌▌▌▌▌▌▌ 42% 1h20m` | label and reset `dim`; bar and % in the level color; empty segments `panel2` |
 | levels | 60/85 house rule | green < 60, yellow 60–84, red ≥ 85 |
 | directory | plain text | `cyan` = light-mode `lav` (#ABA7DE), the palette's ANSI cyan |
 | git branch | plain text, `*` when dirty | `ink`; the `*` in `yellow` (attention) |
-| model · effort | rounded chip, UPPERCASE | `accent` fill, `keyink` text |
+| model · effort | rounded chip, lowercase | `accent` fill, `keyink` text |
 | separators | two spaces | — |
 
 The bar uses `▌` (left half block): the empty half of each cell is the 2px gap
@@ -55,6 +55,9 @@ between segments on the device. 10 segments, rounded (42% → 4).
 - Build escapes once with `printf -v`. A `$(…)` per color adds a fork for
   every use, and the script runs on every update. With the loop, a run takes
   ~40 ms (the plain version took ~30 ms).
+- **All text lowercase** (`personal`, `5h`, `1h20m`, `opus 5.5 · xhigh`): the
+  user's choice for this app, overriding the UPPERCASE copy rule in
+  `motifs.md`.
 - Keep `LC_NUMERIC=C` (pt_BR rejects `45.2` in `printf '%.0f'`), and
   `LC_CTYPE=C.UTF-8` so the `$''` caps work under any caller locale.
 - Text on a yellow chip would need `key2`. No element uses one today.
