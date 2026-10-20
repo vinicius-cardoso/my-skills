@@ -18,6 +18,7 @@ The GLCD font has no TTF, so dense text needs a stand-in. Go by role:
 |---|---|---|
 | titles, headings, labels, big numbers | **Press Start 2P** | only at 8, 16, 24, 32 px (multiples of 8). Never for body text or code: it can't be read at small sizes. |
 | code, terminal, dense UI text | **Departure Mono** (Helena Zhang, OFL) | the closest to the GLCD feel that's still readable. Pixel grid of 11 px: use 11, 22… |
+| labels inside a terminal | **Retro Fullwidth** | Press Start 2P on the fullwidth forms, reached through font fallback while the terminal keeps its mono font. See `scripts/fullwidth_font.py` and `recipes/claude-code-statusline.md`. |
 | same, bitmap fallback | **Terminus** | already installed (`/usr/share/fonts/misc/ter-*.otb`). Bitmap `.otb` works in Qt/KDE apps and terminals, but **not** in Chromium/Electron apps (VS Code, Chrome): those need a TTF. |
 | long reading, system UI (menus, dialogs) | keep the system sans | a pixel font on every menu tires the eyes. Here the retro look comes from colors and shapes. Change it only if asked. |
 

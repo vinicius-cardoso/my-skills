@@ -25,13 +25,19 @@ Newest first. One entry per app per machine.
 
 ### 2026-10-20 · Claude Code status line · vinicius-antunes-desktop
 - **Look:** snes dark, 24-bit ANSI: A B X Y dots, account and model as
-  keycap chips, 5h/7d/context as 10-segment `▌` bars at 60/85 levels.
-  Font is the terminal's.
+  rounded chips, 5h/7d/context as 10-segment `▌` bars at 60/85 levels.
+  Labels, numbers and chips in Press Start 2P through the fullwidth fallback
+  font. Everything else uses the terminal's font.
 - **Files:** `~/.claude/statusline-command.sh` (backup:
-  `statusline-command.sh.bak-retro-20261020`). `settings.json` untouched.
-- **Undo:** copy the backup over the script; it takes effect on the next update.
-- **Notes:** checked live in Orca's terminal. Usage thresholds went from
-  80/70 to 60/85. See `recipes/claude-code-statusline.md`.
+  `statusline-command.sh.bak-retro-20261020`), `settings.json` untouched;
+  `~/.local/share/fonts/retro/RetroFullwidth-Regular.ttf` (built with
+  `scripts/fullwidth_font.py`); `~/.config/fontconfig/conf.d/60-retro-fullwidth.conf`
+  (new, the directory didn't exist).
+- **Undo:** copy the backup over the script; delete the font and the
+  fontconfig file, `fc-cache -f`.
+- **Notes:** colors and rounded chips checked live in Orca. The pixel font
+  checked in a fresh headless Chrome; Orca needs a restart to load it. Usage
+  thresholds went from 80/70 to 60/85. See `recipes/claude-code-statusline.md`.
 
 ### 2026-10-20 · fonts · vinicius-antunes-desktop
 - **Look:** Press Start 2P (google/fonts) and Departure Mono v1.500
