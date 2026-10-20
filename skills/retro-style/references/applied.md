@@ -38,4 +38,6 @@ Newest first. One entry per app per machine.
   still Dracula with the default font.
 - **Notes:** the user wants an existing Marketplace theme, not overrides, and
   the editor font left alone. Shortlist page:
-  https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (no theme picked yet).
+  https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (rejected: wants Famicom
+  colors); Famicom shortlist: https://claude.ai/artifact/RJJWiTjCxB7DzehqDkxBzp
+  (no theme picked yet).

@@ -9,7 +9,12 @@ by hand. Don't touch the editor or terminal font. Show options first: search
 the Marketplace API, pull each theme's colors from its VSIX, and render
 previews side by side. Shortlist from 2026-10-20:
 https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (Earthbound, GameBoy
-Classic, PICO-8, NES Light, 8-Bit, CRT Themes, Arcade, Mario). The mapping
+Classic, PICO-8, NES Light, 8-Bit, CRT Themes, Arcade, Mario): **rejected**,
+the user wants Famicom colors (cream, maroon, red, gold). Second shortlist,
+scored by color distance over 1,668 variants:
+https://claude.ai/artifact/RJJWiTjCxB7DzehqDkxBzp (Showa Retro Caramel,
+Amber CRT Daylight, Paddy Ox, Traditional Japanese Shrine, Earth Tone,
+Primary-ish Warm, Darker+ Material Red, Bearded Ruby). The mapping
 below stays as a reference for a custom theme, used only if asked.
 
 ## Where
