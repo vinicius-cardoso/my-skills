@@ -1,7 +1,10 @@
 # VS Code
 
-Status: **reverted.** Applied on the desktop on 2026-10-20 and undone the same
-day at the user's request.
+Status: **in use: Traditional Japanese Shrine** (Marketplace theme), desktop,
+2026-10-20. To set it up elsewhere: `code --install-extension
+AdriaForcada.traditional-japanese-vscode-theme`, then set
+`"workbench.colorTheme": "Traditional Japanese Shrine"`. The custom-override
+approach below was tried and reverted.
 
 **User preference (read this first):** for VS Code, only the color theme
 changes, and it should be an existing Marketplace theme, not overrides written

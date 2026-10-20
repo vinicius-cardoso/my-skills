@@ -31,13 +31,14 @@ Newest first. One entry per app per machine.
 - **Undo:** delete the folder, `fc-cache -f`.
 - **Notes:** the laptop needs the same folder before any app there uses them.
 
-### 2026-10-20 · VS Code · vinicius-antunes-desktop (reverted)
-- **Look:** none now. The hand-made snes dark color overrides and the
-  Departure Mono font were applied, then reverted the same day at the user's
-  request: settings.json restored from `settings.json.bak-retro-20261020`,
-  still Dracula with the default font.
-- **Notes:** the user wants an existing Marketplace theme, not overrides, and
-  the editor font left alone. Shortlist page:
-  https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (rejected: wants Famicom
-  colors); Famicom shortlist: https://claude.ai/artifact/RJJWiTjCxB7DzehqDkxBzp
-  (no theme picked yet).
+### 2026-10-20 · VS Code · vinicius-antunes-desktop
+- **Look:** Marketplace theme `Traditional Japanese Shrine`
+  (extension `AdriaForcada.traditional-japanese-vscode-theme` v1.3.3), picked
+  from the Famicom-colors shortlist
+  (https://claude.ai/artifact/RJJWiTjCxB7DzehqDkxBzp). Font unchanged.
+- **Files:** `~/.config/Code/User/settings.json`, only `workbench.colorTheme`
+  (was `Dracula Theme`; backup `settings.json.bak-retro-20261020`)
+- **Undo:** set the theme back to Dracula; optionally uninstall the extension.
+- **Notes:** a first attempt with hand-written snes dark overrides plus
+  Departure Mono was reverted: the user wants an existing theme and the
+  default font. Settings Sync is off, so the laptop needs its own install.
