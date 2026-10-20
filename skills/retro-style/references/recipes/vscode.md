@@ -1,7 +1,16 @@
 # VS Code
 
-Status: **applied** on the desktop (2026-10-20, snes dark). The full set of
-keys written is in the settings.json there; the table below is the core.
+Status: **reverted.** Applied on the desktop on 2026-10-20 and undone the same
+day at the user's request.
+
+**User preference (read this first):** for VS Code, only the color theme
+changes, and it should be an existing Marketplace theme, not overrides written
+by hand. Don't touch the editor or terminal font. Show options first: search
+the Marketplace API, pull each theme's colors from its VSIX, and render
+previews side by side. Shortlist from 2026-10-20:
+https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (Earthbound, GameBoy
+Classic, PICO-8, NES Light, 8-Bit, CRT Themes, Arcade, Mario). The mapping
+below stays as a reference for a custom theme, used only if asked.
 
 ## Where
 

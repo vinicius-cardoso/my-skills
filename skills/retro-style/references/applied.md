@@ -31,13 +31,11 @@ Newest first. One entry per app per machine.
 - **Undo:** delete the folder, `fc-cache -f`.
 - **Notes:** the laptop needs the same folder before any app there uses them.
 
-### 2026-10-20 · VS Code · vinicius-antunes-desktop
-- **Look:** snes dark; editor and terminal in Departure Mono 22px, ligatures
-  off, block cursor (solid).
-- **Files:** `~/.config/Code/User/settings.json` (backup:
-  `settings.json.bak-retro-20261020`)
-- **Undo:** set `workbench.colorTheme` back to `Dracula Theme` (the colors are
-  scoped to `[Default Dark Modern]` and go dormant), or restore the backup.
-- **Notes:** previous theme was Dracula. Settings Sync is off, so the laptop
-  needs its own apply. Already-running VS Code needs a full restart to see
-  newly installed fonts.
+### 2026-10-20 · VS Code · vinicius-antunes-desktop (reverted)
+- **Look:** none now. The hand-made snes dark color overrides and the
+  Departure Mono font were applied, then reverted the same day at the user's
+  request: settings.json restored from `settings.json.bak-retro-20261020`,
+  still Dracula with the default font.
+- **Notes:** the user wants an existing Marketplace theme, not overrides, and
+  the editor font left alone. Shortlist page:
+  https://claude.ai/artifact/21S6XM4bCzobUD2F1KX1ZB (no theme picked yet).
