@@ -23,6 +23,17 @@ Newest first. One entry per app per machine.
 - **Notes:** what broke or surprised, if anything
 -->
 
+### 2026-10-22 · SparkMiner OLED (ESP32 + SSD1306) · vinicius-antunes-laptop
+- **Look:** monochrome take on snes dark: header strip with A B X Y (A/B
+  filled, X/Y hollow), Press Start 2P titles and 2x/3x numbers, 5x7 body
+  text, keycaps, block bars, blinking `!` lamp. Screens MINER, LOTTO, POOL,
+  CHAIN, plus boot, SETUP and RESET.
+- **Files:** `~/projects/hardware/btc-mining/SparkMiner/src/display/display_oled.cpp`
+  (branch `retro-oled`; original flash image in `btc-mining/backup/`).
+- **Undo:** `git checkout main` in SparkMiner and reflash `esp32-devkit-oled`.
+- **Notes:** see `recipes/ssd1306-oled.md` for the 1-bit role mapping and the
+  font-baseline gotcha.
+
 ### 2026-10-20 · Claude Code status line · vinicius-antunes-laptop
 - **Look:** same as the desktop entry below (the desktop script copied over
   with `scp`).
