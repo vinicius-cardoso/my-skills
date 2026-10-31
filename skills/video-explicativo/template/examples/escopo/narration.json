@@ -1,0 +1,143 @@
+{
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "+6%",
+  "scenes": [
+    {
+      "id": "hook",
+      "beats": [
+        "Olha essas duas funções.",
+        "As duas usam o nome n. E ninguém se confunde: o n de square é um, o n de double é outro.",
+        "Agora olha essa aqui.",
+        "O nome square aparece quatro vezes na mesma linha. E compila. square de 3 dá 9.",
+        "Como a linguagem sabe qual square é qual? A resposta tem nome: escopo."
+      ]
+    },
+    {
+      "id": "defs",
+      "beats": [
+        "Antes, duas palavras que vão aparecer o vídeo inteiro.",
+        "Definição é onde um nome ganha um significado. Ela estabelece uma possível vinculação, o binding, pra aquele nome.",
+        "Ocorrência é cada vez que o nome aparece. E toda ocorrência precisa estar vinculada a uma definição.",
+        "Em fun square square, o primeiro square define a função. O segundo define o parâmetro.",
+        "E os dois do corpo? Eles estão dentro da função, onde o parâmetro manda. Então se vinculam ao parâmetro: 3 vezes 3.",
+        "O escopo de uma definição é isso: a região do programa onde ela decide o que o nome significa.",
+        "E as linguagens organizam isso de quatro jeitos: bloco, namespace nomeado, namespace primitivo e escopo dinâmico. Vamos um por um."
+      ]
+    },
+    {
+      "id": "blocks",
+      "beats": [
+        "Primeiro, o bloco. É um pedaço do código que contém definições e delimita onde elas valem.",
+        "Em ML, o bloco clássico é o let, in, end. O x e o y só existem do let até o end.",
+        "Mas não é só o let. Os parâmetros de uma fun também formam um bloco. E cada alternativa de uma fun com padrões, ou de um case, tem o seu.",
+        "Em Java e em C, o bloco é o par de chaves. Esse c só existe dentro do while."
+      ]
+    },
+    {
+      "id": "nesting",
+      "beats": [
+        {
+          "text": "E quando um bloco está dentro de outro, e os dois definem o mesmo nome? O que esse código devolve?",
+          "pause": 1.2
+        },
+        "Devolve José. Ganha a definição mais interna, a mais próxima de quem usa.",
+        "Essa é a regra geral, e ela cai na prova: o escopo de uma definição é o bloco que a contém, menos os escopos das redefinições em blocos internos.",
+        "Pensa em dois retângulos. O n de fora vale em A, menos o buraco B. Dentro de B, quem manda é o n de dentro. Escopo é A menos B.",
+        "Em C funciona igual. Esse printf imprime 2.",
+        "Agora, pegadinha. O mesmo código em Java nem compila. Java não deixa uma variável local esconder outra variável local do mesmo método."
+      ]
+    },
+    {
+      "id": "stack",
+      "beats": [
+        "Mas como o compilador aplica essa regra? Com uma pilha de dicionários.",
+        "São quatro operações. Push: entrou num bloco, empilha um dicionário vazio.",
+        "Add definition: achou uma definição, anota no dicionário do topo.",
+        "Lookup: achou um nome, procura do topo pra baixo.",
+        "E pop: saiu do bloco, joga o dicionário fora.",
+        "Vamos rodar isso no exemplo da lista dez. A pilha começa com o dicionário global.",
+        "fun g x. O g vai pro global, e o corpo de g abre um bloco com o parâmetro x.",
+        "let: bloco novo. val inc igual a 1 entra no topo.",
+        "fun f y. O f entra nesse mesmo dicionário, e o corpo de f abre o bloco do y.",
+        "Agora o compilador lê y mais inc. Lookup de y: está no topo. Lookup de inc: não está no topo. Desce um nível, e acha inc igual a 1.",
+        "Acabou o corpo de f: pop.",
+        "fun h z. O h entra no dicionário do let, o corpo de h abre o bloco do z, e o let interno empilha mais um, com inc igual a 2.",
+        "Lookup de f: desce a pilha até achar, lá no dicionário do let.",
+        "Fim do let interno e fim de h: dois pops. Depois, h x, e os pops finais.",
+        "Repara num detalhe: o lookup de inc dentro de f aconteceu quando o compilador leu o corpo de f. Naquele momento, o inc igual a 2 nem existia na pilha. Guarda isso."
+      ]
+    },
+    {
+      "id": "named",
+      "beats": [
+        "Segundo tipo: namespace nomeado. É um bloco que tem nome. E esse nome serve pra acessar as definições de fora.",
+        "Em ML, isso é uma structure. Dentro de S, a e f se enxergam normalmente. De fora, você escreve S ponto a, e S ponto f de 5, que dá 6.",
+        "Em Java, pacotes e classes são namespaces nomeados: Month ponto min, Month ponto max. Em C++, namespaces, classes e structs.",
+        "E servem pra duas coisas. Agrupar: em vez de um nome comprido, maxSupplierBid, você tem SupplierBid ponto max.",
+        "E ocultar informação: com private, parte das definições nem é visível de fora."
+      ]
+    },
+    {
+      "id": "primitive",
+      "beats": [
+        "Terceiro tipo: namespace primitivo. Esses vêm de fábrica, definidos pela própria linguagem.",
+        "ML tem dois: um pra tipos e outro pra expressões. Por isso val int igual a 3 é válido. O int tipo mora num namespace, o int variável mora no outro, e eles não se esbarram.",
+        "Java tem cinco: pacotes, tipos, métodos, variáveis e rótulos.",
+        "E é por isso que esse código maluco compila. Vamos classificar cada Reuse.",
+        "Linha um: class Reuse. Definição de um tipo.",
+        "Linha dois. O primeiro Reuse é o tipo de retorno: uso do tipo.",
+        "O segundo é o nome do método: definição.",
+        "Depois vem o tipo do parâmetro, uso do tipo. E o nome do parâmetro: definição de variável.",
+        "Linha três: Reuse dois pontos. É o rótulo do laço. Mais uma definição.",
+        "No if: o primeiro Reuse é o parâmetro, o objeto em que o método é chamado. O segundo é o método. O terceiro e o quarto, o parâmetro de novo.",
+        "break Reuse usa o rótulo. E return Reuse devolve o parâmetro.",
+        "Resultado: quatro definições. Classe, método, parâmetro e rótulo. Todo o resto é uso. Na prova passada caiu exatamente isso, com o nome Transação. Resposta: quatro.",
+        "E a pegadinha do outro lado: em C, int int igual a 2 não compila. Lá, int é palavra reservada, e não pode ser nome de nada."
+      ]
+    },
+    {
+      "id": "dynamic",
+      "beats": [
+        "Quarto e último: escopo dinâmico. Até agora, tudo foi resolvido na compilação, só lendo o texto do programa. Isso é escopo estático, ou léxico. É o que quase todas as linguagens usam.",
+        "No escopo dinâmico, a vinculação é decidida na execução. Se o nome não está na função, a busca continua em quem chamou a função. E em quem chamou essa, e assim por diante.",
+        {
+          "text": "De volta ao exemplo da lista. Quanto vale g de 5?",
+          "pause": 1.2
+        },
+        "Segue a execução. g recebe x igual a 5, cria inc igual a 1, e chama h de 5.",
+        "h cria o seu inc, igual a 2, e chama f de 5.",
+        "E f calcula y mais inc. Mas qual inc?",
+        "Com escopo estático, vale o inc de onde f foi definida. f foi escrita dentro do let em que inc é 1. Resultado: 5 mais 1, 6.",
+        "Com escopo dinâmico, f não tem inc, então pergunta pra quem chamou. Quem chamou foi h, e h tem inc igual a 2. Resultado: 5 mais 2, 7.",
+        "Então: estático olha onde a função foi definida. Dinâmico olha de onde ela foi chamada.",
+        "O escopo dinâmico aparece em linguagens como LISP e APL, e tem problemas. É difícil de implementar de forma eficiente, cria escopos enormes, e quem chama pode mudar o comportamento da função sem ela saber."
+      ]
+    },
+    {
+      "id": "redef",
+      "beats": [
+        {
+          "text": "Mais uma pegadinha clássica. val x igual a 10. f de y é x mais y. Depois, val x igual a 20. Quanto dá f de 1?",
+          "pause": 1.8
+        },
+        "Dá 11. O segundo val x não altera o primeiro. Ele cria uma definição nova, que vale daqui pra frente. E f já estava vinculada ao x que existia quando ela foi definida."
+      ]
+    },
+    {
+      "id": "recap",
+      "beats": [
+        "Resumindo o que levar pra prova.",
+        "Escopo é A menos B: vale a definição mais interna.",
+        "Pra contar definições, separe definição de uso. Tipo de retorno, tipo de parâmetro e chamadas são usos.",
+        "ML tem dois namespaces primitivos, Java tem cinco, e em C, int é reservado.",
+        "E no escopo estático, olhe onde a função foi definida. No dinâmico, quem chamou.",
+        {
+          "text": "Pra fechar, um desafio. Quantas definições do nome Node tem nesse código? Pausa o vídeo e conta.",
+          "pause": 3.5
+        },
+        "São três. A classe, o campo int Node, e o método. O tipo de retorno, o tipo do parâmetro e o n ponto Node são usos.",
+        "No próximo vídeo: tipos algébricos. Até lá."
+      ]
+    }
+  ]
+}

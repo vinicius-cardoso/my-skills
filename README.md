@@ -6,6 +6,7 @@ My personal [Claude Code skills](https://docs.claude.com/en/docs/claude-code/ski
 | --- | --- |
 | [`theme-picker`](skills/theme-picker/SKILL.md) | Builds an interactive artifact to choose a project's fonts and colors: N design directions previewed on a mock of the project's own screens, a light/dark/system switch, and mixing of heading, body and mono fonts and palette across directions. Then writes the choice to `docs/design/visual-identity.md`. |
 | [`retro-style`](skills/retro-style/SKILL.md) | My retro look (Nintendo console palettes, pixel fonts, keycaps, block bars) from the claude-usage-display CYD, and how to apply it to any app: 16 color roles, a palette exporter (CSS, ANSI, JSON), per-app recipes and a log of what's applied on each machine. |
+| [`video-explicativo`](skills/video-explicativo/SKILL.md) | Animated explainer videos (1080p MP4, pt-BR narration) in the style of the Bytada YouTube channel: hand-written titles, code panels with highlighted tokens, arrows and step-by-step simulations, with edge-tts narration synced to Remotion animations. Includes the engine (`template/`), the first video as a worked example and a skill-routing test. |
 
 ## Install
 
@@ -18,6 +19,7 @@ git clone git@github.com:vinicius-cardoso/my-skills.git ~/projects/claude/my-ski
 mkdir -p ~/.claude/skills
 ln -s ~/projects/claude/my-skills/skills/theme-picker ~/.claude/skills/theme-picker
 ln -s ~/projects/claude/my-skills/skills/retro-style ~/.claude/skills/retro-style
+ln -s ~/projects/claude/my-skills/skills/video-explicativo ~/.claude/skills/video-explicativo
 ```
 
 Then type `/theme-picker` in any session, or just ask to choose a project's
