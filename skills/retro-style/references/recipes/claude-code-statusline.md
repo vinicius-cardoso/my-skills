@@ -39,8 +39,8 @@ theme or mode, replace that table only.
 | element | look | roles |
 |---|---|---|
 | signature | `●●●●` | red, yellow, green, blue |
-| account | rounded chip, one letter | `W` (work) `blue`, `P` (personal) `green`, unknown `purple`; text `keyink` |
-| machine | rounded chip, one letter | `D` (`*-desktop`) / `L` (`*-laptop`) from `$HOSTNAME`, else the short hostname; `key` fill, `keyink` text |
+| account | square tag (no padding: cap + letter + cap) | `P` (personal) `red`, `W` (work) `yellow` with `key2` text; unknown: padded `purple` chip |
+| machine | square tag, one space after the account tag | `D` (`*-desktop`) `blue`, `L` (`*-laptop`) `green` with `key2` text, from `$HOSTNAME`; else the short hostname in a padded `key` chip. The four tags reuse the A B X Y dot colors |
 | 5h / 7d / context | `5h ▌▌▌▌▌▌▌▌▌▌ 42% 1h20m` | label and reset `dim`; bar and % in the level color; empty segments `panel2` |
 | levels | 60/85 house rule | green < 60, yellow 60–84, red ≥ 85 |
 | directory | plain text | `cyan` = light-mode `lav` (#ABA7DE), the palette's ANSI cyan |
@@ -61,6 +61,6 @@ between segments on the device. 10 segments, rounded (42% → 4).
   `motifs.md`.
 - Keep `LC_NUMERIC=C` (pt_BR rejects `45.2` in `printf '%.0f'`), and
   `LC_CTYPE=C.UTF-8` so the `$'\uE0B6'` caps work under any caller locale.
-- Text on a yellow chip would need `key2`. No element uses one today.
+- Light fills (`yellow`, `green`) take `key2` text; `red` and `blue` keep `keyink`.
 - The old thresholds were 80% (5h/7d) and 70% (context). They now follow the
   60/85 house rule.
