@@ -26,12 +26,13 @@ Project: `~/projects/experiments/video-generation` (not a git repo).
 
 ```
 content/<id>/narration.json      script: scenes → beats, voice, rate
-tools/tts.py <id>                synthesizes beats → studio/public/<id>/*.mp3 + timeline.json + out/<id>.srt
-tools/render.sh <id>             Remotion render + loudness normalization → out/<id>.mp4
+tools/tts.py <id>                synthesizes beats → studio/public/<id>/*.mp3 + timeline.json + out/NN-<id>.srt
+tools/render.sh <id>             Remotion render + loudness normalization → out/NN-<id>.mp4 (one render at a time machine-wide)
+tools/stills.sh <id> <dir> …     review stills (max 3 runs at once machine-wide)
 studio/src/lib.tsx               the visual toolkit (Code, Arrow, Region, Chip, Card, Title, useBeats…)
-studio/src/<id>/                 Video.tsx + scene components for that video
-studio/src/Root.tsx              one <Composition id="<id>"> per video
-studio/stills.mjs                renders review stills (contact sheets / specific moments)
+studio/src/<id>/index.tsx        entry point of that video alone (stills and renders use it)
+studio/src/<id>/Video.tsx        exports `Video` and `duration`; maps scene ids to scene components
+studio/src/Root.tsx              every video, only for `npx remotion studio` previews
 samples/                         voice samples the voice was chosen from
 references/                      the Bytada videos used as the style reference
 ```
@@ -76,10 +77,12 @@ Use chapter chips (`Part`) when the topic has an explicit taxonomy (e.g. the 4 k
 ### 3. Write `content/<id>/narration.json`
 
 ```json
-{"voice": "pt-BR-ThalitaMultilingualNeural", "rate": "+6%",
+{"number": 2, "voice": "pt-BR-ThalitaMultilingualNeural", "rate": "+6%",
  "scenes": [{"id": "hook", "beats": ["Olha essas duas funções.", {"text": "Quanto vale g de 5?", "pause": 1.2}]}]}
 ```
 
+- **`number`** is the episode's position in the series: outputs are named `out/NN-<id>.mp4/.srt` so
+  they sort in watching order. Omit it for a standalone video.
 - **Voice: Thalita** (`pt-BR-ThalitaMultilingualNeural`, rate `+6%`). Vinícius picked it from 10 samples
   on 2026-10-31. Don't change it unless he asks.
 - A **beat** is one or two short sentences, and one visual change. More beats = tighter sync.
@@ -97,8 +100,10 @@ A beat far outside that is truncated audio, so delete its mp3 and re-run.
 Read `references/toolkit.md` (the `lib.tsx` API and the timing model) and `references/visual-style.md`
 (the Bytada look and layout rules) before writing scenes.
 
-- Create `studio/src/<id>/Video.tsx` (copy `escopo/Video.tsx`: it maps scene ids to components and reads
-  `public/<id>/timeline.json`), the scene files, and add a `<Composition id="<id>">` to `Root.tsx`.
+- Create `studio/src/<id>/index.tsx` (copy `escopo/index.tsx`, change the id), `studio/src/<id>/Video.tsx`
+  exporting `Video` and `duration` (copy `escopo/Video.tsx`: it maps scene ids to components and reads
+  `public/<id>/timeline.json`), and the scene files. Add the video to `Root.tsx` for studio previews.
+  Per-video entry points mean a half-written video never breaks another video's stills or render.
 - Inside a scene, everything is timed against the narration: `inn(i, w(i, 'palavra'))` makes an element
   appear when the word is spoken in beat `i`. **Beat indices are positional.** If you insert or delete a beat
   in `narration.json`, re-check every index in that scene. `w()` throws if the word isn't in the beat, which
@@ -107,11 +112,11 @@ Read `references/toolkit.md` (the `lib.tsx` API and the timing model) and `refer
 
 ### 5. Review stills before rendering
 
-A full render takes minutes; stills take seconds. From `studio/`:
+A full render takes minutes; stills take seconds. From the project root:
 
 ```bash
-node stills.mjs <id> /tmp/stills                 # end-of-beat still for every beat + sheet_<scene>.jpeg
-node stills.mjs <id> /tmp/stills stack:9:0.6     # one still at 60% of beat 9 of scene "stack"
+tools/stills.sh <id> /tmp/stills                 # end-of-beat still for every beat + sheet_<scene>.jpeg
+tools/stills.sh <id> /tmp/stills stack:9:0.6     # one still at 60% of beat 9 of scene "stack"
 ```
 
 Look at every contact sheet, then pick mid-beat moments for anything transient (lookups, arrows mid-draw,
@@ -121,9 +126,21 @@ countdowns), because end-of-beat stills miss them. Check against the list in `re
 ### 6. Render and deliver
 
 ```bash
-tools/render.sh <id>        # → out/<id>.mp4, loudness-normalized to -16 LUFS
+tools/render.sh <id>        # → out/NN-<id>.mp4, loudness-normalized to -16 LUFS
 ```
 
 Check duration and that audio exists (`ffprobe`), send the MP4 with `SendUserFile`, and give a short summary:
 scene list, anything you verified or found wrong in the course material, and 3–4 specific things you'd like
 feedback on. For the first video of a new series, wait for his verdict before producing the rest.
+
+## Making several videos at once
+
+Running one subagent per video works (the DCC024 series: 8 videos in parallel). The tools already take
+turns: `tts.py` holds a lock (edge-tts rate-limits bursts), `stills.sh` allows 3 runs, `render.sh` one.
+Give each agent: its id, its source files, the next-video teaser, the rule to touch only its own
+`content/<id>/`, `studio/src/<id>/`, `studio/public/<id>/` and `out/NN-<id>.*`, and the type-check command
+`cd studio && npx tsc --noEmit -p . 2>&1 | grep "src/<id>/"` (other folders may be mid-edit). Expect each
+agent to use ~250k tokens: 8 at once can exhaust a 5-hour usage window, so launch the exam-heaviest topics
+first and ask for the report *before* the final render wait, so a usage cutoff doesn't lose it. Check every
+finished video yourself (duration, audio level, a frame sheet, answers vs. the answer key) before sending.
+

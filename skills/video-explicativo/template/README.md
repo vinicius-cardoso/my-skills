@@ -11,10 +11,10 @@ content/<id>/narration.json   script: scenes → beats (one or two sentences eac
         ▼
 studio/public/<id>/*.mp3      one mp3 per beat (edge-tts, cached by text hash)
 studio/public/<id>/timeline.json   frame where every scene/beat starts
-out/<id>.srt                  subtitles
+out/NN-<id>.srt               subtitles (NN = "number" in narration.json)
         │  Remotion (React → video)
         ▼
-out/<id>.mp4
+out/NN-<id>.mp4
 ```
 
 - **Voice:** `pt-BR-ThalitaMultilingualNeural` via edge-tts (free, needs internet). Other options:
@@ -33,7 +33,7 @@ cd studio
 npx remotion studio src/index.ts                      # live preview in the browser
 node stills.mjs escopo /tmp/stills                    # end-of-beat stills + one contact sheet per scene
 node stills.mjs escopo /tmp/stills stack:9:0.5        # one still at 50% of beat 9 of scene "stack"
-cd .. && tools/render.sh escopo                       # out/escopo.mp4, loudness-normalized
+cd .. && tools/render.sh escopo                       # out/01-escopo.mp4 (number from narration.json), loudness-normalized
 ```
 
 New video `<id>`: `content/<id>/narration.json`, `studio/src/<id>/` (copy `escopo/Video.tsx`), and a

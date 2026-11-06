@@ -14,7 +14,7 @@ const picks = args.filter((a) => a.includes(':'));
 const only = args.filter((a) => !a.includes(':'));
 fs.mkdirSync(out, {recursive: true});
 const tl = JSON.parse(fs.readFileSync(path.join(root, 'public', vid, 'timeline.json')));
-const serveUrl = await bundle({entryPoint: path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public')});
+const serveUrl = await bundle({entryPoint: fs.existsSync(path.join(root, 'src', vid, 'index.tsx')) ? path.join(root, 'src', vid, 'index.tsx') : path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public')});
 const composition = await selectComposition({serveUrl, id: vid});
 if (picks.length) {
   for (const pk of picks) {

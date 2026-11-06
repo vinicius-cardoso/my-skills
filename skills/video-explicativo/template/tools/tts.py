@@ -3,9 +3,11 @@
 usage: .venv/bin/python tools/tts.py <video-id>      (e.g. escopo)
 
 Reads  content/<id>/narration.json
-Writes studio/public/<id>/<hash>.mp3, studio/public/<id>/timeline.json, out/<id>.srt
+Writes studio/public/<id>/<hash>.mp3, studio/public/<id>/timeline.json, out/<NN>-<id>.srt
+(NN = "number" in narration.json, the episode order; plain out/<id>.srt if absent)
 """
 import asyncio
+import fcntl
 import hashlib
 import json
 import re
@@ -116,7 +118,8 @@ async def main(vid: str):
 
     out = ROOT / "out"
     out.mkdir(exist_ok=True)
-    (out / f"{vid}.srt").write_text("".join(
+    name = f"{spec['number']:02d}-{vid}" if "number" in spec else vid
+    (out / f"{name}.srt").write_text("".join(
         f"{i}\n{srt_time(a)} --> {srt_time(b)}\n{txt}\n\n" for i, (a, b, txt) in enumerate(srt, 1)))
     print(f"total {timeline['dur'] / FPS:.1f}s, {len(scenes)} scenes")
     for s in scenes:
@@ -124,4 +127,7 @@ async def main(vid: str):
 
 
 if __name__ == "__main__":
-    asyncio.run(main(sys.argv[1]))
+    # one synthesis at a time across all sessions/agents (edge-tts rate-limits bursts)
+    with open("/tmp/vg-tts.lock", "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        asyncio.run(main(sys.argv[1]))
