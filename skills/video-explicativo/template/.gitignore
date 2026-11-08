@@ -1,5 +1,7 @@
 .venv/
+.venv-qa/
 node_modules/
 studio/public/
 out/
 samples/
+__pycache__/

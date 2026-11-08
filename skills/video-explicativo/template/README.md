@@ -12,6 +12,9 @@ content/<id>/narration.json   script: scenes → beats (one or two sentences eac
 studio/public/<id>/*.mp3      one mp3 per beat (edge-tts, cached by text hash)
 studio/public/<id>/timeline.json   frame where every scene/beat starts
 out/NN-<id>.srt               subtitles (NN = "number" in narration.json)
+        │  .venv-qa/bin/python tools/check_narration.py <id>   (faster-whisper, GPU or CPU via tools/hw.py)
+        ▼
+studio/public/<id>/qa.json    what Whisper heard per beat: ok / listen / FAIL
         │  Remotion (React → video)
         ▼
 out/NN-<id>.mp4
@@ -29,6 +32,8 @@ out/NN-<id>.mp4
 
 ```bash
 .venv/bin/python tools/tts.py escopo                  # (re)generate narration + timeline + subtitles
+tools/setup_qa.sh                                     # once per machine: Whisper venv (.venv-qa) + model
+.venv-qa/bin/python tools/check_narration.py escopo   # Whisper hears every beat; FAIL = English/wrong word/cut
 cd studio
 npx remotion studio src/index.ts                      # live preview in the browser
 node stills.mjs escopo /tmp/stills                    # end-of-beat stills + one contact sheet per scene

@@ -22,11 +22,14 @@ If this skill was loaded for a card or app-behavior video, stop and use `gravar-
 
 ## Where things live
 
-Project: `~/projects/experiments/video-generation` (not a git repo).
+Project: `~/projects/experiments/video-generation` (not a git repo, and not synced). It exists only on
+the laptop as of 2026-11-08; on the desktop, bootstrap it first. Finished DCC024 videos are moved to
+`~/Documents/university/coursework/14th_semester/DCC024_LINGUAGENS_DE_PROGRAMACAO/04_Videos/`.
 
 ```
 content/<id>/narration.json      script: scenes → beats, voice, rate
 tools/tts.py <id>                synthesizes beats → studio/public/<id>/*.mp3 + timeline.json + out/NN-<id>.srt
+tools/check_narration.py <id>    Whisper checks every beat (run with .venv-qa; tools/setup_qa.sh creates it)
 tools/render.sh <id>             Remotion render + loudness normalization → out/NN-<id>.mp4 (one render at a time machine-wide)
 tools/stills.sh <id> <dir> …     review stills (max 3 runs at once machine-wide)
 studio/src/lib.tsx               the visual toolkit (Code, Arrow, Region, Chip, Card, Title, useBeats…)
@@ -90,10 +93,42 @@ Use chapter chips (`Part`) when the topic has an explicit taxonomy (e.g. the 4 k
 - Spoken Brazilian Portuguese, conversational ("a gente", "repara", "guarda isso"), short sentences, no
   bullet-point prose. Say code the way a person reads it aloud ("val x igual a 10", "S ponto f de 5").
 - Words the voice mangles go in the `SAY` map of `tools/tts.py` (display text → spoken text).
+- **Thalita is a multilingual voice.** A word that looks English can come out with an English accent, or
+  flip the whole sentence to English. Code topics are full of them ("stack", "binding", "default",
+  "override"). Keep the ones the course actually uses as terms and let the check below judge them;
+  for everything else prefer the Portuguese word. Spell acronyms in `SAY` ("ML" → "M L").
+- No one-word sentences ("Pronto.", "Certo."). They tend to come out clipped. Fold them into the next sentence.
 
 Then run `.venv/bin/python tools/tts.py <id>` from the project root. It caches each beat by text hash,
 retries rate-limit errors, and prints scene lengths. Sanity check: speech is 10–18 characters per second.
 A beat far outside that is truncated audio, so delete its mp3 and re-run.
+
+### 3b. Check the narration with Whisper
+
+```bash
+tools/setup_qa.sh                                          # once per machine (~1 s after the first time)
+.venv-qa/bin/python tools/check_narration.py <id> [scene …]  # all scenes, or only these
+```
+
+It transcribes every beat with faster-whisper large-v3 and compares that with the script. Both sides
+are normalized first: `SAY` substitutions, punctuation, numbers as digits or words, and "pra"/"para".
+It writes `studio/public/<id>/qa.json`.
+- **FAIL** (exit 1): not heard as Portuguese, or more than 8% of the characters differ. That means an
+  English accent, a wrong word or a truncated beat. edge-tts is deterministic, so re-running `tts.py`
+  gives the same audio. Rephrase the beat or add a `SAY` entry, then run `tts.py` and the check again.
+- **listen**: a letter or a short word differs ("Olha"/"Olhe", "um"/"o"). It's usually Whisper's
+  mistake, not the voice's. Listen to the mp3 the line points at before rendering.
+
+Results are cached per beat, so after an edit only the changed beats are transcribed. Whisper picks the
+hardware by itself (`tools/hw.py`, same as `gravar-video-card`), and the first output line says which.
+
+| Machine | Profile | Speed |
+| --- | --- | --- |
+| Desktop, RTX 3060 Ti | large-v3, CUDA float16 | ~1–2 s per beat (estimated from `gravar-video-card` runs, not measured on these videos) |
+| Laptop, i5-1240P (Iris Xe, no CUDA) | large-v3, int8, 16 threads | ~17 s per beat (12 beats of `escopo` in 211 s, 2026-11-08). A 75-beat video takes ~20 min. |
+
+On the laptop, run the full check while you build the scenes (step 4), not right before the render. For a
+quick pass, `NARRACAO_MODEL=large-v3-turbo` is faster, but its verdicts can differ from large-v3's.
 
 ### 4. Build the scenes
 
@@ -129,14 +164,15 @@ countdowns), because end-of-beat stills miss them. Check against the list in `re
 tools/render.sh <id>        # → out/NN-<id>.mp4, loudness-normalized to -16 LUFS
 ```
 
-Check duration and that audio exists (`ffprobe`), send the MP4 with `SendUserFile`, and give a short summary:
+Don't render with a FAIL in `check_narration.py`. Check duration and that audio exists (`ffprobe`), send the MP4 with `SendUserFile`, and give a short summary:
 scene list, anything you verified or found wrong in the course material, and 3–4 specific things you'd like
 feedback on. For the first video of a new series, wait for his verdict before producing the rest.
 
 ## Making several videos at once
 
 Running one subagent per video works (the DCC024 series: 8 videos in parallel). The tools already take
-turns: `tts.py` holds a lock (edge-tts rate-limits bursts), `stills.sh` allows 3 runs, `render.sh` one.
+turns: `tts.py` holds a lock (edge-tts rate-limits bursts), `check_narration.py` one Whisper run at a time
+(several at once would just fight over the CPU/GPU), `stills.sh` allows 3 runs, `render.sh` one.
 Give each agent: its id, its source files, the next-video teaser, the rule to touch only its own
 `content/<id>/`, `studio/src/<id>/`, `studio/public/<id>/` and `out/NN-<id>.*`, and the type-check command
 `cd studio && npx tsc --noEmit -p . 2>&1 | grep "src/<id>/"` (other folders may be mid-edit). Expect each
