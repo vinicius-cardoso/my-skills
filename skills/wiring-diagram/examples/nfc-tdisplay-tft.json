@@ -1,0 +1,29 @@
+{
+  "theme": "dark",
+  "parts": {
+    "U1": { "name": "T-Display ESP32 1.14in", "pins": {
+      "3V3": "", "GND": "", "13": "GPIO13", "15": "GPIO15", "17": "GPIO17", "21": "GPIO21",
+      "22": "GPIO22", "25": "GPIO25", "26": "GPIO26", "27": "GPIO27", "32": "GPIO32",
+      "33": "GPIO33", "37": "GPIO37" } },
+    "U2": { "name": "PN532 NFC Module V3", "pins": {
+      "J1-1": "GND", "J1-2": "VCC", "J1-3": "SDA", "J1-4": "SCL", "J2-7": "IRQ" } },
+    "U3": { "name": "2.4in TFT ST7789 + EC11", "pins": {
+      "1": "VCC", "2": "GND", "3": "SCL", "4": "SDA", "5": "RES", "6": "DC", "7": "CS",
+      "8": "BLK", "9": "CLK", "10": "DT", "11": "SW" } }
+  },
+  "nets": [
+    { "name": "3V3", "color": "red",    "pins": ["U1.3V3", "U2.J1-2", "U3.1", "U3.8"] },
+    { "name": "GND", "color": "black",  "pins": ["U1.GND", "U2.J1-1", "U3.2"] },
+    { "name": "SDA", "color": "blue",   "pins": ["U1.21", "U2.J1-3"] },
+    { "name": "SCL", "color": "yellow", "pins": ["U1.22", "U2.J1-4"] },
+    { "name": "NFC_IRQ", "color": "white", "pins": ["U1.37", "U2.J2-7"] },
+    { "name": "TFT_SCK", "color": "orange", "pins": ["U1.25", "U3.3"] },
+    { "name": "TFT_MOSI", "color": "green", "pins": ["U1.26", "U3.4"] },
+    { "name": "TFT_CS", "color": "brown",  "pins": ["U1.27", "U3.7"] },
+    { "name": "TFT_DC", "color": "violet", "pins": ["U1.33", "U3.6"] },
+    { "name": "TFT_RST", "color": "grey",  "pins": ["U1.32", "U3.5"] },
+    { "name": "ENC_A", "color": "pink",    "pins": ["U1.13", "U3.9"] },
+    { "name": "ENC_B", "color": "pink",    "pins": ["U1.17", "U3.10"] },
+    { "name": "ENC_SW", "color": "white",  "pins": ["U1.15", "U3.11"] }
+  ]
+}
