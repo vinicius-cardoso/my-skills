@@ -23,6 +23,17 @@ Newest first. One entry per app per machine.
 - **Notes:** what broke or surprised, if anything
 -->
 
+### 2026-11-21 · vlc-web-remote web UI · vinicius-antunes-laptop
+- **Look:** snes dark at 2x device scale, matching the knob: header strip
+  with state, A B X Y dots and ON/OFF chip; now-playing card with a 20-block
+  progress bar; keycap transport buttons with pixel icons; volume card with
+  a clickable block bar in level color; track rows with ON chips. Press
+  Start 2P 16 px + Departure Mono 22 px, bundled in `public/fonts/`.
+- **Files:** `~/projects/web/vlc-web-remote/public/` (`index.html`,
+  `styles/app.css`, `scripts/app.js`, `favicon.svg`, `fonts/`).
+- **Undo:** `git checkout` the previous commit's `public/` in that repo.
+- **Notes:** recipe written: `recipes/web-page.md`.
+
 ### 2026-11-21 · vlc-web-remote knob (ESP32-C3 + 2.4" ST7789 + EC11) · vinicius-antunes-laptop
 - **Look:** snes dark, 320x240 landscape: header strip with play state, A B X Y
   dots and a mode chip (VOL blue, SEEK yellow, MENU accent, OFF red);
