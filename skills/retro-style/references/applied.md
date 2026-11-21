@@ -23,6 +23,19 @@ Newest first. One entry per app per machine.
 - **Notes:** what broke or surprised, if anything
 -->
 
+### 2026-11-21 · vlc-web-remote knob (ESP32-C3 + 2.4" ST7789 + EC11) · vinicius-antunes-laptop
+- **Look:** snes dark, 320x240 landscape: header strip with play state, A B X Y
+  dots and a mode chip (VOL blue, SEEK yellow, MENU accent, OFF red);
+  now-playing card with a 20-block progress bar; volume card with a 3x
+  percent in level color (green to 100, yellow boost, red above 150);
+  keycap row naming BUTTON / KNOB CLICK / KNOB HOLD. Press Start 2P + GLCD.
+- **Files:** `~/projects/web/vlc-web-remote/firmware/src/` (`theme.h` and
+  `pixelfont.h` copied from nfc-tag-manager; `gfx.h` draws into a 320x40
+  band canvas pushed six times per frame, no flicker, 25 KB RAM).
+- **Undo:** reflash any other firmware; nothing on the PC changed.
+- **Notes:** this module (same as nfc-tag-manager's) needs inversion OFF and
+  rotation 3 for landscape with the knob on the right.
+
 ### 2026-10-22 · SparkMiner OLED (ESP32 + SSD1306) · vinicius-antunes-laptop
 - **Look:** monochrome take on snes dark: header strip with A B X Y (A/B
   filled, X/Y hollow), Press Start 2P titles and 2x/3x numbers, 5x7 body
